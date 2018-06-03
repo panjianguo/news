@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangyaobin.news.mapper.UserMapper">
+
+    <select id="listUser" resultType="com.zhangyaobin.news.entity.UserEntity"
+            parameterType="com.zhangyaobin.news.param.UserParam">
+        SELECT
+        id,
+        add_time as addTime,
+        age,
+        id_card as idCard,
+        name,
+        password,
+        phone,
+        role_id as roleId
+        from user_info
+        <where>
+            <if test="name != null and name !=''">
+                name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <if test="index != null and pageNumber != null">
+            limit #{index},#{index+pageNumber}
+        </if>
+    </select>
+
+</mapper>

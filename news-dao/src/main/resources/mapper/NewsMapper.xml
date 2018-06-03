@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangyaobin.news.mapper.NewsMapper">
+
+    <select id="listNews" resultType="com.zhangyaobin.news.entity.NewsEntity"
+            parameterType="com.zhangyaobin.news.param.NewsParam">
+        SELECT
+        id,
+        title,
+        add_user_name as addUserName,
+        type_name as typeName,
+        type_id as typeId,
+        number,
+        pic_id as picId,
+        add_time as addTime
+        from news
+        <where>
+            <if test="title != null and title !=''">
+                title like CONCAT('%', #{title}, '%')
+            </if>
+            <if test="addUserName != null and addUserName !=''">
+                add_user_name like CONCAT('%', #{addUserName}, '%')
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId}
+            </if>
+        </where>
+        <if test="index != null and pageNumber != null">
+            limit #{index},#{index+pageNumber}
+        </if>
+    </select>
+
+</mapper>

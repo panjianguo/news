@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangyaobin.news.mapper.PrivilegeMapper">
+
+    <select id="listPrivilege" resultType="com.zhangyaobin.news.entity.PrivilegeEntity"
+            parameterType="com.zhangyaobin.news.param.CommonParam">
+        SELECT
+        id,
+        name
+        from priviege
+        <where>
+            <if test="name != null and name !=''">
+                name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <if test="index != null and pageNumber != null">
+            limit #{index},#{index+pageNumber}
+        </if>
+    </select>
+
+</mapper>
